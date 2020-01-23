@@ -1,68 +1,135 @@
 // reducers.jsx for being explicit in instructions
 import {
-  GLOBAL_VAR_1,
-  GLOBAL_VAR_2,
-  GLOBAL_VAR_3,
-  //some more names
-  HANDLECHANGE,
-  GETDATASTART,
-  GETDATASUCCESSSS,
-  GETDATAFAIL,
+  //logging in to api...
   LOGINSTART,
   LOGINSUCCESS,
   LOGINFAIL,
+  //getting data...
+  GETDATASTART,
+  GETDATASUCCESS,
+  GETDATAFAIL,
+  //registering to api...
   REGISTERSTART,
   REGISTERSUCCESS,
-  REGISTERFAIL
+  REGISTERFAIL,
+  //edit data from api...
+  EDITDATASTART,
+  EDITDATASUCCESS,
+  EDITDATAFAIL,
+  //add data to api...
+  ADDDATASTART,
+  ADDDATASUCCESS,
+  ADDDATAFAIL,
+  ADDBRANCHSTART,
+  ADDBRANCHSUCCESS,
+  ADDBRANCHFAIL,
+  //some more names
+  HANDLECHANGE,
+  HANDLECHANGE_NEWBRANCH,
+  HANDLENEWDATASET,
+  LOGOUT,
+  DELETEUNIT,
+  CANCELEDIT
 } from "../actions/actions";
+
+export const pathNames = {
+  Home: "/",
+  Login: "/login",
+  SpiderChart: "/spiderchart",
+  Register: "/register",
+  DataSubmission: "/submission",
+  SpiderGraph: "/spiderGraph",
+  GraphProfiles: "/graphProfiles"
+};
 
 const initialState = {
   error: "",
   //logging in
   isLoggingIn: false,
-  credentials: [],
+  isRegistering: false,
+  didRegister: false,
+  credentials: {
+    username: "",
+    password: ""
+  },
   token: "",
   //getting data from API or similar
   isFetching: false,
   //data storage
-  //****CHANGE TO DESCRIPTIVE NAMES******
-  chartData: {
+  userData: {
+    userName: "",
     labels: [],
-    datasets: [{ label: "", data: [] }]
+    datasets: [{ id: "", label: "", data: [] }]
   },
-  is_Array1: [],
-  is_Object1: {},
+  userData2: {
+    graphs: [
+      {
+        id: "",
+        title: "",
+        description: "",
+        userName: "",
+        labels: [],
+        datasets: [
+          {
+            id: "",
+            dataset_label: "",
+            data: []
+          }
+        ]
+      }
+    ]
+  },
   //adding data
   isAdding: false,
   newData: {
-    key1: "",
-    key2: "",
-    key3: ""
+    //new dataset
+    label: "",
+    data: []
   },
+  isNewBranch: false,
+  newBranch: "",
   //editing data
   isEditing: false,
   initialData: {
-    key1: "",
-    key2: "",
-    key3: ""
+    data: []
   },
-  dataToChange: {}
+  dataToEdit: {
+    userName: "",
+    dataLabel: "",
+    branches: [],
+    datasets: []
+  },
   //other categories...
+  reFetch: false
 };
 
 export const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case GLOBAL_VAR_1:
+    //==========Registration Functions========
+    case REGISTERSTART:
+      console.log("REGISTER connect to api....");
       return {
-        ...state
+        ...state,
+        error: "",
+        isRegistering: true,
+        didRegister: false
       };
-    case GLOBAL_VAR_2:
+    case REGISTERSUCCESS:
+      console.log("REGISTER success! token:", payload);
       return {
-        ...state
+        ...state,
+        error: "",
+        isRegistering: false,
+        token: payload,
+        didRegister: true
       };
-    case GLOBAL_VAR_3:
+    case REGISTERFAIL:
+      console.log("REGISTER failed :(");
       return {
-        ...state
+        ...state,
+        error: payload,
+        isRegistering: false,
+        didRegister: false
       };
     //======Login Functions========
     case LOGINSTART:
@@ -73,7 +140,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         isLoggingIn: true
       };
     case LOGINSUCCESS:
-      console.log("login success!");
+      console.log("login success!", payload);
       return {
         ...state,
         error: "",
@@ -87,15 +154,365 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         error: payload,
         isLoggingIn: false
       };
-    //===Handle Change=====
-    case HANDLECHANGE:
-      // console.log(payload.target);
+    //=====Getting data from api=====
+    case GETDATASTART:
       return {
         ...state,
-        [payload.form]: {
-          ...state[payload.form],
-          [payload.target.name]: payload.target.value
+        error: "",
+        isFetching: true
+      };
+    case GETDATASUCCESS:
+      console.log(
+        "reducers>GETDATASUCCESS>payload, userData, newData:\n",
+        payload,
+        "\n",
+        state.userData,
+        "\n",
+        state.newData
+      );
+      return {
+        ...state,
+        error: "",
+        isFetching: false,
+        userData: payload[0],
+        userData2: payload[1]
+      };
+    case GETDATAFAIL:
+      return {
+        ...state,
+        error: payload,
+        isFetching: false
+      };
+
+    //=====Adding data to api======
+    case ADDDATASTART:
+      return {
+        ...state,
+        isAdding: true,
+        err: ""
+      };
+    case ADDDATASUCCESS:
+      let newDataId = state.userData.datasets.length;
+      /*
+      console.log(
+        `ADDDATASUCCESS>\n`,
+        `newDataId:${newDataId}`,
+        `payload: ${payload}`
+      );
+      console.log(state.userData.datasets);
+      */
+      //=====
+      /*
+      return {
+        ...state, //spread operator
+        err: "",
+        isAdding: false,
+        reFetch: !state.reFetch,
+        newData: {
+          label: "",
+          data: []
+        },
+      };
+        */
+      //only doing the below until API is up and running===========================
+      return {
+        ...state, //spread operator
+        err: "",
+        isAdding: false,
+        reFetch: !state.reFetch,
+        newData: {
+          label: "",
+          data: []
+        },
+        userData: {
+          ...state.userData,
+          datasets: [
+            ...state.userData.datasets, //all previous info
+            {
+              id: newDataId + 1,
+              label: payload.label,
+              data: payload.data,
+              backgroundColor: "black",
+              borderColor: "black"
+            } //new data
+          ]
         }
+      };
+
+    case ADDDATAFAIL:
+      return {
+        ...state,
+        isAdding: false,
+        err: payload
+      };
+    case ADDBRANCHSTART:
+      return {
+        ...state,
+        isNewBranch: true,
+        err: ""
+      };
+    case ADDBRANCHSUCCESS:
+      console.log("addbranch:", payload);
+      /*
+      return {
+        ...state, //spread operator
+        err: "",
+        isNewBranch: false,
+        reFetch: !state.reFetch,
+        newBranch: "",
+      }
+      */
+      //forcing state.data to change for now============================================
+      console.log(
+        "=============CHANGE reducer>ADDBRANCHSUCCESS=================="
+      );
+      const graphsInd = 0;
+      const tempLabels = state.userData2.graphs[graphsInd].labels;
+      return {
+        ...state, //spread operator
+        err: "",
+        isNewBranch: false,
+        reFetch: !state.reFetch,
+        newBranch: "",
+        userData: {
+          ...state.userData,
+          labels: [...state.userData.labels, payload]
+        },
+        userData2: {
+          ...state.userData2,
+          graphs: [
+            ...state.userData2.graphs.map((graph, index) => {
+              if (index === graphsInd) {
+                return {
+                  ...state.userData2.graphs[index],
+                  labels: [tempLabels, payload]
+                };
+              }
+            })
+          ]
+        }
+      };
+    case ADDBRANCHFAIL:
+      console.log("addBranchFail");
+      return {
+        ...state,
+        isNewBranch: false,
+        err: payload
+      };
+    //======editing data from api======
+    case EDITDATASTART:
+      console.log("EDITDATASTART:\n", payload);
+      const id = 0;
+      return {
+        ...state,
+        isEditing: true,
+        err: "",
+        dataToEdit: {
+          userName: state.userData.userName,
+          branches: state.userData.labels,
+          dataLabel: state.userData.datasets[id].label,
+          datasets: state.userData.datasets[id].data
+        }
+      };
+    case EDITDATASUCCESS:
+      console.log(payload);
+      /*
+      return {
+        ...state,
+        err: "",
+        isEditing: false,
+        dataToEdit: {},
+        reFetch: !state.reFetch
+      };
+      */
+      console.log(
+        "=============CHANGE reducer>EDITDATASUCCESS=================="
+      );
+      const id1 = 0;
+      return {
+        ...state, //spread operator
+        err: "",
+        isAdding: false,
+        reFetch: !state.reFetch,
+        newData: {
+          label: "",
+          data: []
+        },
+        isEditing: false,
+        userData: {
+          ...state.userData,
+          userName: payload.userName,
+          labels: payload.branches,
+          datasets: state.userData.datasets.map((dataset, index) => {
+            if (index === id1) {
+              console.log("index matches!!!", dataset);
+              return {
+                ...state.userData.datasets[index],
+                label: payload.dataLabel,
+                data: payload.datasets
+              };
+            }
+            return dataset;
+          })
+        }
+      };
+    case EDITDATAFAIL:
+      return {
+        ...state,
+        isEditing: false,
+        err: "",
+        dataToEdit: {}
+      };
+    //===Handle Change=====
+    case HANDLECHANGE:
+      //
+      let branchLength = state.userData.labels.length;
+      if (state.newData.data.length === 0) {
+        for (let i = 0; i < branchLength; i++) {
+          state.newData.data[i] = 0;
+        }
+      }
+      //switch case due to too many cases
+      switch (
+        payload.form //different management depending on the form
+      ) {
+        //checks payload.form for 'newBranch'
+        case "newBranch":
+          return {
+            ...state,
+            newBranch: payload.target.value
+          };
+        //checks payload.form for 'newData'
+        case "newData":
+          return {
+            ...state,
+            [payload.form]:
+              payload.target.name === "label"
+                ? //IF target.name === 'label', then...
+                  (console.log("is newData, is label"),
+                  {
+                    ...state[payload.form],
+                    [payload.target.name]: payload.target.value
+                  })
+                : //IF target.name != 'label', then...
+                  (console.log("is newData, not label"),
+                  {
+                    ...state[payload.form],
+                    data: state[payload.form].data.map((dataVal, index) => {
+                      if (index == payload.target.id) {
+                        console.log("index matches!!");
+                        return payload.target.value;
+                      }
+                      return dataVal;
+                    })
+                  })
+          }; //===end case "newData"======
+        //checks payload.form for 'editData'
+        case "editData":
+          if (
+            payload.target.name !== "datasets" &&
+            payload.target.name !== "branches"
+          ) {
+            //if target.name != branches OR datasets...
+            return {
+              ...state,
+              dataToEdit: {
+                ...state.dataToEdit,
+                [payload.target.name]: payload.target.value
+              }
+            };
+          } else {
+            //if target.name = branches OR datasets...
+            return {
+              ...state,
+              dataToEdit: {
+                ...state.dataToEdit,
+                [payload.target.name]: state.dataToEdit[
+                  payload.target.name
+                ].map((dataVal, index) => {
+                  if (index == payload.target.id) {
+                    console.log("index matches!!");
+                    return payload.target.value;
+                  }
+                  return dataVal;
+                })
+              }
+            };
+          }
+        case "credentials":
+          return {
+            ...state,
+            [payload.form]: {
+              ...state[payload.form],
+              [payload.target.name]: payload.target.value
+            }
+          }; //===end case "credentials"======
+        default:
+          console.log("default: payload", payload);
+          return {
+            ...state,
+            [payload.form]: payload.target.value
+          };
+      }
+
+    //==========================
+    //==========================
+    case CANCELEDIT:
+      return {
+        ...state,
+        isEditing: false,
+        dataToEdit: {},
+        error: ""
+      };
+    case DELETEUNIT:
+      return {
+        ...state,
+        reFetch: !state.reFetch,
+        userData: {
+          ...state.userData,
+          datasets: state.userData.datasets.filter((dataset, index) => {
+            if (dataset.id === payload.id) {
+              return false;
+            } else {
+              return true;
+            }
+          })
+        }
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        error: "",
+        //logging in
+        isLoggingIn: false,
+        isRegistering: false,
+        credentials: [],
+        token: "",
+        //getting data from API or similar
+        isFetching: false,
+        //data storage
+        userData: {
+          labels: [],
+          datasets: [{ id: "", label: "", data: [] }]
+        },
+        // is_Array1: [],
+        // is_Object1: {},
+        //adding data
+        isAdding: false,
+        newData: {
+          label: "",
+          data: []
+        },
+        isNewBranch: false,
+        newBranch: [],
+        //editing data
+        isEditing: false,
+        initialData: {
+          data: []
+        },
+        dataToEdit: {},
+        //other categories...
+        reFetch: false
       };
     default:
       return state;

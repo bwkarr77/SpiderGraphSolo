@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { login, handleChange } from "../actions/actions";
+import { register, handleChange } from "../actions/actions";
 
-const pushDir1 = "/spiderGraph";
+const pushDir1 = "/spidergraph";
 
-const Login = ({
+const Register = ({
   history,
   credentials,
   handleChange,
-  login,
+  register,
   error,
   token,
-  reFetch
+  didRegister
 }) => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route++
@@ -23,15 +23,12 @@ const Login = ({
     }
   }, [token]);
 
-  if (token) {
-    console.log("token", token);
-  } else {
-    console.log("no token");
-  }
+  console.log("didRegister:", didRegister);
+
   return (
     <div>
-      <h2>Login:</h2>
-      <form onSubmit={e => login(e, credentials)}>
+      <h2>Register:</h2>
+      <form onSubmit={e => register(e, credentials)}>
         <input
           type="text"
           name="username"
@@ -46,11 +43,13 @@ const Login = ({
           value={credentials.password}
           onChange={e => handleChange(e, "credentials")}
         />
-        <button type="submit">Log In</button>
+        <button>Log In</button>
       </form>
-      <div className="userInfo">
-        {token ? "Sign In Successful!!!" : "Not Signed in..."}
-      </div>
+      {didRegister ? (
+        <h3>Registration Success!!</h3>
+      ) : (
+        <h3>Registration Not Complete...</h3>
+      )}
     </div>
   );
 };
@@ -58,7 +57,8 @@ const Login = ({
 const mapStateToProps = state => ({
   credentials: state.credentials,
   error: state.error,
-  token: state.token
+  token: state.token,
+  didRegister: state.didRegister
 });
 
-export default connect(mapStateToProps, { login, handleChange })(Login);
+export default connect(mapStateToProps, { register, handleChange })(Register);
