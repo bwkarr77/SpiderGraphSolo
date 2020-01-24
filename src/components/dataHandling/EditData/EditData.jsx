@@ -6,7 +6,7 @@ import {
   cancelEdit,
   saveEdit,
   handleChange
-} from "../../actions/actions";
+} from "../../../actions/actions";
 
 const EditData = ({
   //from.. somewhere...

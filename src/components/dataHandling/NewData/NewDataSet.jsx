@@ -5,7 +5,7 @@ import {
   addData,
   handleChange
   // handleNewDataset
-} from "../../actions/actions";
+} from "../../../actions/actions";
 
 const NewDataSet = ({
   //props passed down...

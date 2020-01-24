@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import RadarChart2 from "./RadarChart2";
 import DataSubmission from "../dataHandling/DataSubmission";
-import EditData from "../dataHandling/EditData";
+import EditData from "../dataHandling/EditData/EditData.jsx";
 
 import "../../css/Data.css";
 

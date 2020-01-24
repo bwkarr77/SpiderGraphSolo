@@ -5,10 +5,10 @@ import { connect } from "react-redux";
 import { data } from "../dummycomps/Data";
 import "../../css/Data.css";
 
-import NewBranch from "./NewBranch";
-import NewDataSet from "./NewDataSet";
-import UserData from "./UserData";
-import EditData from "./EditData";
+import NewBranch from "./NewBranch/NewBranch";
+import NewDataSet from "./NewData/NewDataSet";
+import UserData from "./UserData/UserData";
+import EditData from "./EditData/EditData.jsx";
 
 import {
   setData,
