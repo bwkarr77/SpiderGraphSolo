@@ -16,7 +16,7 @@ const UserData = ({ userData, startEdit, deleteUnit, state, derpData }) => {
       <h3>UserData:</h3>
       {/* <SketchPicker /> */}
       <div className="data-header">
-        <span className="branch-names">Dataset Names</span>
+        <span className="branch-title">Dataset Names</span>
         {/* mapping branch names */}
         {labels.map(branchName => (
           <span key={branchName} className="branch-names">

@@ -29,9 +29,3 @@
   display: flex;
   flex-direction: column;
 }
-
-.loginWindow {
-  width: 100%;
-  position: fixed;
-  top: 150px;
-}

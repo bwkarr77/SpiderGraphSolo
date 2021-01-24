@@ -4,11 +4,13 @@ import { connect } from "react-redux";
 
 import { data } from "../dummycomps/Data";
 import "../../css/Data.css";
+import "./DataHandling.scss";
 
 import NewBranch from "./NewBranch/NewBranch";
 import NewDataSet from "./NewData/NewDataSet";
 import UserData from "./UserData/UserData";
 import EditData from "./EditData/EditData.jsx";
+import Graphs from "../radarHandling/Graphs";
 
 import {
   setData,
@@ -67,6 +69,9 @@ const DataSubmission = ({
         </div>
         {/* clean up below?? */}
       </DropdownButton>
+      {/* Testing.... */}
+      <Graphs />
+      {/* End Testing.... */}
       <section className="data-display">
         <UserData userData={userData} />
       </section>

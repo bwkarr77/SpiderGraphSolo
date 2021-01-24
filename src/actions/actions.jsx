@@ -39,7 +39,10 @@ export const DELETEUNIT = "DELETEUNIT";
 export const CANCELEDIT = "CANCELEDIT";
 
 const apiBase = "https://spider-graph-bw.herokuapp.com/api";
+// const apiBase = "https://better-professor-feb20.herokuapp.com/api";
 const apiGet = "https://spider-graph-bw.herokuapp.com/api/graphs/1";
+// const apiGet =
+//   "https://better-professor-feb20.herokuapp.com/api/restricted/users/10/messages";
 const apiRegister = `${apiBase}/auth/register`;
 const apiLogin = `${apiBase}/auth/login`;
 // const apiGet = `${apiBase}/graphs/1`;

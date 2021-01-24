@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
+import {Link} from 'react-router-dom';
+
 import { connect } from "react-redux";
 import { login, handleChange } from "../actions/actions";
+import { pathNames } from "../reducers/reducers";
 
 const pushDir1 = "/spiderGraph";
 
@@ -29,9 +32,10 @@ const Login = ({
     console.log("no token");
   }
   return (
-    <div>
+    <div className="authScreen">
+    <div className='authWindow'>
       <h2>Login:</h2>
-      <form onSubmit={e => login(e, credentials)}>
+      <form onSubmit={e => login(e, credentials)} className="authCredentials">
         <input
           type="text"
           name="username"
@@ -49,8 +53,17 @@ const Login = ({
         <button type="submit">Log In</button>
       </form>
       <div className="userInfo">
-        {token ? "Sign In Successful!!!" : "Not Signed in..."}
+        {token ? (
+        <h3>"Sign In Successful!!!"</h3>
+        ) : (
+        <h3>"Not Signed in..."</h3>
+        )}
       </div>
+      
+      <Link to={pathNames.Register}>
+          <button>Register</button>
+        </Link>
+    </div>
     </div>
   );
 };
