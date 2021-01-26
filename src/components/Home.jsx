@@ -12,14 +12,6 @@ console.log(pathNames);
 const Home = () => {
   return (
     <div>
-      {/* Home
-      <h2>LOGIN:</h2>
-      <Link to={pathNames.Login}>Login</Link>
-      <Route exact path={pathNames.Login} component={Login} />
-      <h4>_________________</h4>
-      <h3>REGISTER:</h3>
-      <Link to={pathNames.Register}>Register</Link>
-      <Route exact path={pathNames.Register} component={Register} /> */}
       <div className="authScreen">
         <div className="authWindow">
           <h2>LOGIN:</h2>

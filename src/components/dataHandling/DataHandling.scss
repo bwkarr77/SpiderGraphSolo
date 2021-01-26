@@ -3,6 +3,7 @@
   color: white;
   font-size: 1em;
   display: inline-block;
+  transform: rotate(-90deg);
 }
 
 .branch-names {
@@ -10,5 +11,7 @@
   color: white;
   font-size: 0.7em;
   display: inline-block;
-  //   transform: rotate(290deg);
+  transform: rotate(-90deg);
+  // position: absolute;
+  margin-left: -30px;
 }

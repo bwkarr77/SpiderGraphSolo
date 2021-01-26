@@ -33,9 +33,9 @@ const App = ({ logout, reFetch }) => {
           {/*  */}
           <div className="navBar">
             <Link to={pathNames.Home}>Home</Link>
+            <Link to={pathNames.SpiderGraph}>SpiderGraph</Link>
             <Link to={pathNames.GraphProfiles}>User Graph Profiles</Link>
             <Link to={pathNames.DataSubmission}>Data Submission</Link>
-            <Link to={pathNames.SpiderGraph}>SpiderGraph</Link>
             <Link to={pathNames.Home} onClick={logout}>
               Logout
             </Link>
