@@ -1,7 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
+// import { SketchPicker } from "react-color";
+//Aplpha/Block/Chrome/Circle/Compact/Github/Hue/Material/Photoshop/Sketch/Slider/Swatches/Twitter+Picker
+//  https://www.npmjs.com/package/react-color
 
-import { startEdit, deleteUnit } from "../../actions/actions";
+import { startEdit, deleteUnit } from "../../../actions/actions";
+
+// import "../dataHandling.css";
 
 const UserData = ({ userData, startEdit, deleteUnit, state, derpData }) => {
   const { labels, datasets } = userData;
@@ -9,8 +14,9 @@ const UserData = ({ userData, startEdit, deleteUnit, state, derpData }) => {
   return (
     <div>
       <h3>UserData:</h3>
+      {/* <SketchPicker /> */}
       <div className="data-header">
-        <span className="branch-names">Dataset Names</span>
+        <span className="branch-title">Dataset Names</span>
         {/* mapping branch names */}
         {labels.map(branchName => (
           <span key={branchName} className="branch-names">

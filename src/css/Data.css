@@ -40,13 +40,13 @@
   flex-direction: column;
   justify-content: space-evenly;
 }
-.branch-names {
+/* .branch-names {
   background: rgb(117, 181, 211);
   color: white;
   font-size: 1em;
   display: inline-block;
   transform: rotate(290deg);
-}
+} */
 /* __data__ */
 .data {
   /* styling for the retrieved data */
@@ -72,12 +72,13 @@
 /*..End Spidergraph Data Section..*/
 
 /* ===New Dataset Section=== */
-.newDataset {
+#newDataset {
   border: solid darkolivegreen;
   display: flex;
+  /* display: none; */
   flex-direction: column;
 }
-.newDataset-name,
+#newDataset-name,
 .editDataset-name {
   width: 50%;
 }

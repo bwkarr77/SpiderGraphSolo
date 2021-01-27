@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import "./css/App.css";
+import "./navbar.scss";
+import "./Auth.scss";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import RadarChart2 from "./components/radarHandling/RadarChart2";
@@ -8,6 +10,7 @@ import Login from "./components/Login";
 import { logout } from "./actions/actions";
 import { pathNames } from "./reducers/reducers";
 import PrivateRoute from "./utils/PrivateRoute";
+import radarImg from "./images/radar-chart.png";
 
 //component testing...
 import Register from "./components/Registration";
@@ -26,14 +29,13 @@ const App = ({ logout, reFetch }) => {
     <div className="App">
       <Router>
         <header className="App-header">
+          <img className="radar-logo" src={radarImg} alt="" />
           {/*  */}
           <div className="navBar">
             <Link to={pathNames.Home}>Home</Link>
-            {/* <Link to={pathNames.Login}>Login</Link> */}
-            <Link to={pathNames.GraphProfiles}>User Graph Profiles</Link>
-            {/* <Link to={pathNames.Register}>Register</Link> */}
-            <Link to={pathNames.DataSubmission}>Data Submission</Link>
             <Link to={pathNames.SpiderGraph}>SpiderGraph</Link>
+            <Link to={pathNames.GraphProfiles}>User Graph Profiles</Link>
+            <Link to={pathNames.DataSubmission}>Data Submission</Link>
             <Link to={pathNames.Home} onClick={logout}>
               Logout
             </Link>
@@ -43,17 +45,11 @@ const App = ({ logout, reFetch }) => {
           <Route exact path={pathNames.Home} component={Home} />
           <Route exact path={pathNames.Login} component={Login} />
           <Route exact path={pathNames.Register} component={Register} />
-          <Route
+          <PrivateRoute
             exact
             path={pathNames.GraphProfiles}
             component={GraphProfiles}
           />
-          {/* <Route
-            exact
-            path={pathNames.DataSubmission}
-            component={DataSubmission}
-          /> */}
-          {/* <Route exact path={pathNames.SpiderGraph} component={SpiderGraph} /> */}
           <PrivateRoute
             exact
             path={pathNames.SpiderChart}
