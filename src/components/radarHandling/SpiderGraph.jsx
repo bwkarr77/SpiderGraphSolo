@@ -33,9 +33,9 @@ const SpiderGraph = ({ reFetch, isEditing }) => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   reFetch: state.reFetch,
-  isEditing: state.isEditing
+  isEditing: state.isEditing,
 });
 
 export default connect(mapStateToProps)(SpiderGraph);

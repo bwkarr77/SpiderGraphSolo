@@ -72,12 +72,13 @@
 /*..End Spidergraph Data Section..*/
 
 /* ===New Dataset Section=== */
-.newDataset {
+#newDataset {
   border: solid darkolivegreen;
   display: flex;
+  /* display: none; */
   flex-direction: column;
 }
-.newDataset-name,
+#newDataset-name,
 .editDataset-name {
   width: 50%;
 }
